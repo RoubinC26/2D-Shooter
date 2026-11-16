@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69ea70d18563df34985b42660b71a6a7, type: 3}
+  m_Name: New Item
+  m_EditorClassIdentifier: 
+  itemData:
+  - itemName: SuperGun
+    itemImage: {fileID: 1688479120, guid: e0e62f85d86954b408d06da9836e1045, type: 3}
+    itemHeld: 0
+    itemInfo: "\u8D85\u7EA7\u5389\u5BB3\u7684\u67AA.\u4F7F\u7528\u5B83,\u6BCF\u6B21\u5B50\u5F39\u5C04\u4E2D\u654C\u4EBA\u4F24\u5BB3\u75311\u53D8\u4E3A5."
+    equip: 1
+    itemType: 0
+    equipPrefab: {fileID: 1351343603509582232, guid: 22a21868b0d5c2844b7bcca8f4974c6f, type: 3}
+    effectValue: 0
+    bulletDamage: 5
+    useType: 0
+    grenadeDamage: 0
+    grenadeRadius: 0
+  - itemName: MagicalHat
+    itemImage: {fileID: 1968716139, guid: e0e62f85d86954b408d06da9836e1045, type: 3}
+    itemHeld: 4
+    itemInfo: "\u8FD9\u662F\u4E00\u9876\u795E\u5947\u7684\u5E3D\u5B50.\u6234\u4E0A\u5B83,\u53EF\u4EE5\u62B5\u5FA1\u654C\u4EBA\u70AE\u5F39\u7684\u4F24\u5BB3,\u6240\u53D7\u4F24\u5BB3\u6BCF\u6B21\u51CF1."
+    equip: 1
+    itemType: 1
+    equipPrefab: {fileID: 4557010294850904266, guid: 3a6920104be04a3449984f8844b7df0d, type: 3}
+    effectValue: 1
+    bulletDamage: 0
+    useType: 0
+    grenadeDamage: 0
+    grenadeRadius: 0
+  - itemName: Heart
+    itemImage: {fileID: -1140753807, guid: ddbcab363ef9f6a4fa4d02e60c44fb4d, type: 3}
+    itemHeld: 5
+    itemInfo: "\u56DE\u8840\u7684\u84DD\u8272\u7231\u5FC3.\u4F7F\u7528\u5B83,\u53EF\u4EE5\u8BA9\u8840\u91CF\u52A010,\u4E0A\u9650\u4E3A100."
+    equip: 0
+    itemType: 3
+    equipPrefab: {fileID: 4810608594616782514, guid: 5b160e5aba6fc2343bfc18a5832165e4, type: 3}
+    effectValue: 10
+    bulletDamage: 0
+    useType: 0
+    grenadeDamage: 0
+    grenadeRadius: 0
+  - itemName: Grenade
+    itemImage: {fileID: 1935829491, guid: 0833a55da5733014a959ee643c58859f, type: 3}
+    itemHeld: 5
+    itemInfo: "\u624B\u69B4\u5F39.\u6309\u7A7A\u683C\u5373\u53EF\u4F7F\u7528.\u654C\u4EBA\u8E29\u5230\u5B83\u6263\u9664\u8840\u91CF10."
+    equip: 0
+    itemType: 2
+    equipPrefab: {fileID: 7451414322499947721, guid: 3fdcd0c9af96e894c977d5fde3b6ede3, type: 3}
+    effectValue: 0
+    bulletDamage: 0
+    useType: 1
+    grenadeDamage: 10
+    grenadeRadius: 2
+  - itemName: Ammunition
+    itemImage: {fileID: -972607840, guid: e0e62f85d86954b408d06da9836e1045, type: 3}
+    itemHeld: 1
+    itemInfo: "\u5F39\u836F.\u4F7F\u7528\u5B83\u53EF\u4EE5\u8BA9\u5B50\u5F39\u6570\u91CF\u589E\u52A0100.\u4E0A\u9650\u4E3A900."
+    equip: 0
+    itemType: 3
+    equipPrefab: {fileID: 4810608594616782514, guid: f686d7e3ca7c2214a86ac3c39a8a41ea, type: 3}
+    effectValue: 100
+    bulletDamage: 0
+    useType: 0
+    grenadeDamage: 0
+    grenadeRadius: 0

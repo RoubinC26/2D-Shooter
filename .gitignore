@@ -1,0 +1,40 @@
+# ===== Unity 缓存 / 构建产物（本机生成，不用传）=====
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uild_*/
+[Ll]ogs/
+[Uu]serSettings/
+MemoryCaptures/
+Recordings/
+
+# ===== IDE / 编辑器 =====
+.vs/
+.idea/
+.vscode/
+*.csproj
+*.sln
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+
+# ===== 系统杂项 / 运行日志 =====
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.log
+
+# ===== 大体积第三方资源 / 字体（未上传，见 README「关于资源」）=====
+/Assets/Fonts/
+/Assets/Fonts.meta
+/Assets/Art Assets/
+/Assets/Art Assets.meta
+/Assets/TextMesh Pro/Examples & Extras/
+/Assets/TextMesh Pro/Examples & Extras.meta
+
+# ===== 压缩包 =====
+/Assets.zip
