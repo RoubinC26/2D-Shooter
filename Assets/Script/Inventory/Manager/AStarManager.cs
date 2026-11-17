@@ -5,7 +5,7 @@ public class AStarManager : MonoBehaviour
 {
     public static AStarManager Instance;
 
-    [Header("Ѱ·��������")]
+    [Header("寻路网格设置")]
     public int mapWidth = 80;
     public int mapHeight = 80;
     public float cellSize = 1f;
@@ -20,7 +20,7 @@ public class AStarManager : MonoBehaviour
         GenerateGrid();
     }
 
-    // ��������
+    // 生成网格
     void GenerateGrid()
     {
         grid = new AStarNode[mapWidth, mapHeight];
@@ -37,7 +37,7 @@ public class AStarManager : MonoBehaviour
         }
     }
 
-    // ���⣺��ȡ·��
+    // 对外：获取路径
     public List<AStarNode> FindPath(Vector2 startWorld, Vector2 targetWorld)
     {
         AStarNode start = WorldToNode(startWorld);
@@ -81,7 +81,7 @@ public class AStarManager : MonoBehaviour
         return null;
     }
 
-    // ����·��
+    // 回溯路径
     List<AStarNode> RetracePath(AStarNode start, AStarNode end)
     {
         List<AStarNode> path = new List<AStarNode>();
@@ -95,24 +95,42 @@ public class AStarManager : MonoBehaviour
         return path;
     }
 
-    // ���߷���
+    // 工具方法：八方向代价（直线 10，斜线 14），保证对角代价 < 两次直线的 20
     int GetDistance(AStarNode a, AStarNode b)
     {
         int dx = Mathf.Abs(a.x - b.x);
         int dy = Mathf.Abs(a.y - b.y);
-        return 10 * (dx + dy) + 6 * Mathf.Min(dx, dy);
+        int min = Mathf.Min(dx, dy);
+        int max = Mathf.Max(dx, dy);
+        return 14 * min + 10 * (max - min);
     }
 
     List<AStarNode> GetNeighbors(AStarNode node)
     {
-        List<AStarNode> list = new List<AStarNode>();
+        List<AStarNode> list = new List<AStarNode>(8);
         int x = node.x;
         int y = node.y;
 
+        // 四方向
         if (x + 1 < mapWidth) list.Add(grid[x + 1, y]);
         if (x - 1 >= 0) list.Add(grid[x - 1, y]);
         if (y + 1 < mapHeight) list.Add(grid[x, y + 1]);
         if (y - 1 >= 0) list.Add(grid[x, y - 1]);
+
+        // 四对角：两个直角格都必须是空地才允许斜走，避免斜穿墙角
+        for (int dx = -1; dx <= 1; dx += 2)
+        {
+            for (int dy = -1; dy <= 1; dy += 2)
+            {
+                int nx = x + dx;
+                int ny = y + dy;
+                if (nx < 0 || nx >= mapWidth || ny < 0 || ny >= mapHeight) continue;
+
+                if (grid[nx, y].isObstacle || grid[x, ny].isObstacle) continue;
+
+                list.Add(grid[nx, ny]);
+            }
+        }
 
         return list;
     }

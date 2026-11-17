@@ -1,21 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [Header("»ù´¡ÉèÖÃ")]
+    [Header("åŸºç¡€è®¾ç½®")]
     public float moveSpeed = 2f;
     public float attackRange = 8f;
     public float attackCooldown = 2f;
     public int bulletCount = 8;
 
-    [Header("ÑªÁ¿")]
+    [Header("è¡€é‡")]
     public float maxHealth = 60f;
     public float currentHealth;
 
-    [Header("ÑªÌõ")]
+    [Header("è¡€æ¡")]
     public EnemyHealthBar healthBarPrefab;
     public EnemyHealthBar healthBar;
 
@@ -28,20 +30,20 @@ public class Enemy : MonoBehaviour
     public float pathUpdateCD = 0.3f;
     private float pathTimer;
 
-    [Header("==== µĞÈË×Óµ¯ÉËº¦ ====")]
+    [Header("==== æ•Œäººå­å¼¹ä¼¤å®³ ====")]
     public int bulletDamage = 10;
 
-    [Header("==== µôÂäÎïÆ· ====")]
+    [Header("==== æ‰è½ç‰©å“ ====")]
     public List<GameObject> dropItems;
 
     public GameObject healthBarUI;
     private Vector3 originalScale;
 
-    [Header("¶¾ÒºÉèÖÃ")]
+    [Header("æ¯’æ¶²è®¾ç½®")]
     public bool leavePoisonOnDeath = false;
     public GameObject poisonAreaPrefab;
 
-    [Header("ÊÖÁñµ¯µôÂä")]
+    [Header("æ‰‹æ¦´å¼¹æ‰è½")]
     public bool canDropGrenade = false;
     public GameObject grenadePickupPrefab;
     [Range(0, 100)] public int grenadeDropChance = 30;
@@ -57,16 +59,16 @@ public class Enemy : MonoBehaviour
         _anim = GetComponentInChildren<Animator>();
         sr = GetComponentInChildren<SpriteRenderer>();
 
-        //Ç¿ÖÆ°ÑPrefabÉÏµÄ¸³Öµ¹Ì»¯µ½ÊµÀıÀï
+        //å¼ºåˆ¶æŠŠPrefabä¸Šçš„èµ‹å€¼å›ºåŒ–åˆ°å®ä¾‹é‡Œ
         if (healthBarPrefab == null)
         {
-            Debug.LogError($"[{gameObject.name}] healthBarPrefab Îª¿Õ£¡Çë¼ì²éPrefab¸³Öµ£¡");
+            Debug.LogError($"[{gameObject.name}] healthBarPrefab ä¸ºç©ºï¼è¯·æ£€æŸ¥Prefabèµ‹å€¼ï¼");
         }
     }
 
     private void OnDisable()
     {
-        // µĞÈË±»»ØÊÕÊ±£¬³¹µ×Ïú»ÙÑªÌõ£¬±ÜÃâÏÂ´Î¸´ÓÃ³öÎÊÌâ
+        // æ•Œäººè¢«å›æ”¶æ—¶ï¼Œå½»åº•é”€æ¯è¡€æ¡ï¼Œé¿å…ä¸‹æ¬¡å¤ç”¨å‡ºé—®é¢˜
         if (healthBar != null)
         {
             Destroy(healthBar.gameObject);
@@ -76,51 +78,51 @@ public class Enemy : MonoBehaviour
 
     public void Init()
     {
-        // ÏÈÏú»Ù¾ÉÑªÌõ
+        // å…ˆé”€æ¯æ—§è¡€æ¡
         if (healthBar != null)
         {
             Destroy(healthBar.gameObject);
             healthBar = null;
         }
 
-        // ¡¾¶µµ×£ºÈç¹ûÊµÀıµÄhealthBarPrefabÎª¿Õ£¬Ö±½Ó´ÓPrefabÄ£°åÈ¡¡¿
+        // ã€å…œåº•ï¼šå¦‚æœå®ä¾‹çš„healthBarPrefabä¸ºç©ºï¼Œç›´æ¥ä»Prefabæ¨¡æ¿å–ã€‘
         if (healthBarPrefab == null)
         {
-            // ÕÒµ±Ç°µĞÈËµÄPrefabÄ£°å£¨Èç¹ûÊÇ´ÓPrefabÊµÀı»¯µÄ£¬»áÓĞÕâ¸öÒıÓÃ£©
+            // æ‰¾å½“å‰æ•Œäººçš„Prefabæ¨¡æ¿ï¼ˆå¦‚æœæ˜¯ä»Prefabå®ä¾‹åŒ–çš„ï¼Œä¼šæœ‰è¿™ä¸ªå¼•ç”¨ï¼‰
 #if UNITY_EDITOR
-            // ÕÒµ±Ç°µĞÈËµÄPrefabÄ£°å£¨Èç¹ûÊÇ´ÓPrefabÊµÀı»¯µÄ£¬»áÓĞÕâ¸öÒıÓÃ£©
+            // æ‰¾å½“å‰æ•Œäººçš„Prefabæ¨¡æ¿ï¼ˆå¦‚æœæ˜¯ä»Prefabå®ä¾‹åŒ–çš„ï¼Œä¼šæœ‰è¿™ä¸ªå¼•ç”¨ï¼‰
             Object prefab = PrefabUtility.GetCorrespondingObjectFromSource(gameObject);
             if (prefab != null)
             {
                 healthBarPrefab = ((GameObject)prefab).GetComponent<Enemy>().healthBarPrefab;
-                Debug.Log($"[{gameObject.name}] ´ÓPrefabÄ£°å»Ö¸´ÁËhealthBarPrefab");
+                Debug.Log($"[{gameObject.name}] ä»Prefabæ¨¡æ¿æ¢å¤äº†healthBarPrefab");
             }
 #endif
         }
 
-        // ÖØÖÃÑªÁ¿ºÍ×´Ì¬
+        // é‡ç½®è¡€é‡å’ŒçŠ¶æ€
         currentHealth = maxHealth;
         isAlive = true;
         pathTimer = 0;
         cooldownTimer = 0;
         currentPath = null;
 
-        // ÕÒÍæ¼Ò
+        // æ‰¾ç©å®¶
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         if (player == null)
-            Debug.LogError("Enemy.Init()£ºÕÒ²»µ½Player£¡");
+            Debug.LogError("Enemy.Init()ï¼šæ‰¾ä¸åˆ°Playerï¼");
 
-        // ÖØÖÃÅö×²ÌåºÍ×´Ì¬
+        // é‡ç½®ç¢°æ’ä½“å’ŒçŠ¶æ€
         GetComponent<Collider2D>().enabled = true;
         gameObject.SetActive(true);
 
-        // ´´½¨ÑªÌõ
+        // åˆ›å»ºè¡€æ¡
         if (healthBarPrefab != null)
         {
             Canvas canvas = FindObjectOfType<Canvas>();
             if (canvas == null)
             {
-                Debug.LogError("Enemy.Init()£º³¡¾°ÀïÕÒ²»µ½Canvas£¡ÑªÌõÎŞ·¨´´½¨£¡");
+                Debug.LogError("Enemy.Init()ï¼šåœºæ™¯é‡Œæ‰¾ä¸åˆ°Canvasï¼è¡€æ¡æ— æ³•åˆ›å»ºï¼");
                 return;
             }
 
@@ -129,14 +131,14 @@ public class Enemy : MonoBehaviour
             healthBar.UpdateHp(currentHealth, maxHealth);
             healthBar.gameObject.SetActive(true);
 
-            Debug.Log($"Enemy.Init()£º³É¹¦´´½¨ÑªÌõ£¡ÑªÁ¿£º{currentHealth}/{maxHealth}");
+            Debug.Log($"Enemy.Init()ï¼šæˆåŠŸåˆ›å»ºè¡€æ¡ï¼è¡€é‡ï¼š{currentHealth}/{maxHealth}");
         }
         else
         {
-            Debug.LogError($"Enemy.Init()£º[{gameObject.name}] healthBarPrefab ÈÔÈ»Îª¿Õ£¡Çë¼ì²éPrefab¸³Öµ£¡");
+            Debug.LogError($"Enemy.Init()ï¼š[{gameObject.name}] healthBarPrefab ä»ç„¶ä¸ºç©ºï¼è¯·æ£€æŸ¥Prefabèµ‹å€¼ï¼");
         }
 
-        // ÆäËû×´Ì¬ÖØÖÃ
+        // å…¶ä»–çŠ¶æ€é‡ç½®
         if (healthBarUI != null)
             healthBarUI.SetActive(true);
 
@@ -152,7 +154,7 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        //ÓÎÏ·½áÊø ¡ú µĞÈËÍêÈ«Í£Ö¹
+        //æ¸¸æˆç»“æŸ â†’ æ•Œäººå®Œå…¨åœæ­¢
         if (GameStateManager.Instance != null && GameStateManager.Instance.isGameOver)
             return;
 
@@ -274,7 +276,7 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitForSeconds(0.8f);
 
-        // Çå¿ÕÑªÌõÒıÓÃ
+        // æ¸…ç©ºè¡€æ¡å¼•ç”¨
         healthBar = null;
 
         gameObject.SetActive(false);
@@ -284,21 +286,21 @@ public class Enemy : MonoBehaviour
 
 
     /// <summary>
-    /// ¶ÔÏó³Ø¸´ÓÃÇ°±ØĞëµ÷ÓÃ£ºÖØÖÃËùÓĞ×´Ì¬£¨ÑªÁ¿¡¢ËÀÍö×´Ì¬¡¢ÑªÌõ£©
+    /// å¯¹è±¡æ± å¤ç”¨å‰å¿…é¡»è°ƒç”¨ï¼šé‡ç½®æ‰€æœ‰çŠ¶æ€ï¼ˆè¡€é‡ã€æ­»äº¡çŠ¶æ€ã€è¡€æ¡ï¼‰
     /// </summary>
     public void ResetForPool()
     {
-        // Ç¿ÖÆÖØÖÃÑªÁ¿£¨½â¾ö0Ñª³öÉú£©
+        // å¼ºåˆ¶é‡ç½®è¡€é‡ï¼ˆè§£å†³0è¡€å‡ºç”Ÿï¼‰
         currentHealth = maxHealth;
         isAlive = true;
 
-        // ÖØÖÃÅö×²Ìå
+        // é‡ç½®ç¢°æ’ä½“
         GetComponent<Collider2D>().enabled = true;
 
-        // Çå¿Õ¾ÉÂ·¾¶£¬·ÀÖ¹ÒÆ¶¯Òì³£
+        // æ¸…ç©ºæ—§è·¯å¾„ï¼Œé˜²æ­¢ç§»åŠ¨å¼‚å¸¸
         currentPath = null;
 
-        // ÖØÖÃÀäÈ´
+        // é‡ç½®å†·å´
         cooldownTimer = 0;
         pathTimer = 0;
     }

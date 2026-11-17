@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour
 {
-    [Header("ÒÆ¶¯ÉèÖÃ")]
+    [Header("ç§»åŠ¨è®¾ç½®")]
     public float moveSpeed = 5f;
 
-    [Header("Éä»÷ÉèÖÃ")]
+    [Header("å°„å‡»è®¾ç½®")]
     public Transform firePoint;
     public float fireRate = 0.08f;
     private float cooldown;
@@ -20,7 +20,7 @@ public class PlayerShoot : MonoBehaviour
 
     void Update()
     {
-        // ÓÎÏ·½áÊøÖ±½Ó·µ»Ø
+        // æ¸¸æˆç»“æŸç›´æ¥è¿”å›
         if (GameStateManager.Instance != null && GameStateManager.Instance.isGameOver)
         {
             moveDir = Vector2.zero;
@@ -63,9 +63,8 @@ public class PlayerShoot : MonoBehaviour
         mouseWorld.z = 0;
         Vector2 dir = (mouseWorld - firePoint.position).normalized;
 
-        //¶ÁÈ¡ÕıÈ·ÉËº¦
-        int damage = PlayerConsumable.Instance.NORMAL_GUN_DAMAGE;
-
+        //è¯»å–æ­£ç¡®ä¼¤å®³ï¼šInstance å¯èƒ½ä¸ºç©ºï¼Œå…ˆåˆ¤ç©ºå†å–ï¼Œé¿å…ç©ºå¼•ç”¨
+        int damage = 2;   // ä¸ PlayerConsumable.NORMAL_GUN_DAMAGE çš„é»˜è®¤å€¼ä¸€è‡´
         if (PlayerConsumable.Instance != null)
             damage = PlayerConsumable.Instance.currentWeaponDamage;
 
@@ -76,7 +75,7 @@ public class PlayerShoot : MonoBehaviour
             damage
         );
 
-        Debug.Log("µ±Ç°×Óµ¯ÉËº¦£º" + damage);
+        Debug.Log("å½“å‰å­å¼¹ä¼¤å®³ï¼š" + damage);
     }
 
     public void SetPlayerBullet(Bullet bullet)
